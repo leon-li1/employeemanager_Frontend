@@ -74,12 +74,15 @@ export class AppComponent implements OnInit {
   public searchEmployees(key: string): void {
     console.log(key);
     const results: Employee[] = [];
+    const toLowerCaseKey = key.toLowerCase();
+
     for (const employee of this.employees) {
+      const { name, email, phone, jobTitle } = employee;
       if (
-        employee.name.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        name.toLowerCase().indexOf(toLowerCaseKey) !== -1 ||
+        email.toLowerCase().indexOf(toLowerCaseKey) !== -1 ||
+        phone.toLowerCase().indexOf(toLowerCaseKey) !== -1 ||
+        jobTitle.toLowerCase().indexOf(toLowerCaseKey) !== -1
       ) {
         results.push(employee);
       }
@@ -98,12 +101,10 @@ export class AppComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
       button.setAttribute('data-target', '#addEmployeeModal');
-    }
-    if (mode === 'edit') {
+    } else if (mode === 'edit') {
       this.editEmployee = employee;
       button.setAttribute('data-target', '#updateEmployeeModal');
-    }
-    if (mode === 'delete') {
+    } else if (mode === 'delete') {
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
     }
